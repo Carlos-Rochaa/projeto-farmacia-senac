@@ -3,14 +3,14 @@ public class Medicamento {
     private String descricao;
     private double preco;
 
-    // Construtor
+
     public Medicamento(String nome, String descricao, double preco) {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
     }
 
-    // Getters
+
     public String getNome() {
         return nome;
     }
