@@ -1,4 +1,4 @@
-public class Medicamento {
+public class Medicamento { //Nova classe criada para armazenar informações sobre os medicamentos
     private String nome;
     private String descricao;
     private double preco;
