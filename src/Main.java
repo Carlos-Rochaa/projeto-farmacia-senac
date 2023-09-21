@@ -4,10 +4,10 @@ public class Main {
     public static void main(String[] args) {
         Medicamento[] medicamentos = new Medicamento[10]; // Tamanho do array ajustado conforme necessário
         medicamentos[0] = new Medicamento("Aspirina", "Analgésico e anti-inflamatório", 5.99);
-        medicamentos[1] = new Medicamento("Paracetamol", "Analgésico e antipirético", 4.49);
-        medicamentos[2] = new Medicamento("Ibuprofeno", "Anti-inflamatório e analgésico", 6.99);
+        medicamentos[1] = new Medicamento("Paracetamol", "Analgésico", 4.49);
+        medicamentos[2] = new Medicamento("Ibuprofeno", "Anti-inflamatóro", 6.99);
         medicamentos[3] = new Medicamento("Omeprazol", "Inibidor de ácido gástrico", 7.49);
-        medicamentos[4] = new Medicamento("Dipirona", "Analgésico e antipirético", 4.99);
+        medicamentos[4] = new Medicamento("Dipirona", "Analgésico", 4.99);
         medicamentos[5] = new Medicamento("Dorflex", "Relaxante muscular", 8.99);
         medicamentos[6] = new Medicamento("Amoxicilina", "Antibiótico", 9.99);
         medicamentos[7] = new Medicamento("Histamin", "Anti alergico", 3.99);
