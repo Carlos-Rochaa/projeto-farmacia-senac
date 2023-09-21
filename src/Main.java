@@ -8,7 +8,7 @@ public class Main {
         medicamentos[2] = new Medicamento("Ibuprofeno", "Anti-inflamatório e analgésico", 6.99);
         medicamentos[3] = new Medicamento("Omeprazol", "Inibidor de ácido gástrico", 7.49);
         medicamentos[4] = new Medicamento("Dipirona", "Analgésico e antipirético", 4.99);
-        medicamentos[5] = new Medicamento("Cloridrato de Sertralina", "Antidepressivo", 15.99);
+        medicamentos[5] = new Medicamento("Dorflex", "Relaxante muscular", 8.99);
         medicamentos[6] = new Medicamento("Amoxicilina", "Antibiótico", 9.99);
         medicamentos[7] = new Medicamento("Histamin", "Anti alergico", 3.99);
 
