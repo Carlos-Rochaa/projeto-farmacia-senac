@@ -1,12 +1,13 @@
 import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         String correctUser = "admin";
         int correctPassword = 123;
-        int option;
-        int maxAttempts = 5; // Limite de tentativas
+        int option = 0;
+        int maxAttempts = 5;
         int attempts = 0;
-
+        System.out.println("Farmácia Senackers");
         System.out.println("Bem-vindo ao nosso sistema!\nFaça login para continuar.");
 
         Scanner scanner = new Scanner(System.in);
@@ -17,11 +18,11 @@ public class Main {
 
             System.out.print("Digite a sua senha: ");
             int senha = scanner.nextInt();
-            scanner.nextLine(); // Limpa a quebra de linha pendente
+            scanner.nextLine();
 
             if (usuario.equals(correctUser) && senha == correctPassword) {
                 System.out.println("Usuário logado com sucesso.");
-                break; // Sai do loop se as credenciais estiverem corretas
+                break;
             } else {
                 System.out.println("Usuário ou senha inválidos. Tentativas restantes: " + (maxAttempts - attempts - 1));
                 attempts++;
@@ -33,22 +34,32 @@ public class Main {
             System.exit(1);
         }
 
-        System.out.println("Menu principal:\n1- Inserir\n2- Alterar\n3- Consultar \n4- Remover");
-        option = scanner.nextInt();
-        switch (option) {
-            case 1:
-                System.out.println("escolheu inserir");
-                break;
-            case 2:
-                System.out.println("escolheu alterar");
-                break;
-            case 3:
-                System.out.println("escolheu consultar");
-                break;
-            case 4:
-                System.out.println("escolheu remover");
-                break;
 
-        }
+        do {
+            System.out.println("Menu principal:\n1- Inserir\n2- Alterar\n3- Consultar\n4- Remover");
+            try {
+                option = Integer.parseInt(scanner.nextLine());
+                switch (option) {
+                    case 1:
+                        System.out.println("Você escolheu inserir.");
+                        break;
+                    case 2:
+                        System.out.println("Você escolheu alterar.");
+                        break;
+                    case 3:
+                        System.out.println("Você escolheu consultar.");
+                        break;
+                    case 4:
+                        System.out.println("Você escolheu remover.");
+                        break;
+                    default:
+                        System.out.println("Opção inválida.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Opção deve ser um número válido.");
+            }
+        } while (option < 1 || option > 4);
+
+
     }
 }
