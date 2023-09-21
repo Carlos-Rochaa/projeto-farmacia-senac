@@ -2,16 +2,16 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Medicamento[] medicamentos = new Medicamento[10]; // Tamanho do array ajustado conforme necessário
-        medicamentos[0] = new Medicamento("Aspirina", "Analgésico e anti-inflamatório", 5.99);
-        medicamentos[1] = new Medicamento("Paracetamol", "Analgésico", 4.49);
-        medicamentos[2] = new Medicamento("Ibuprofeno", "Anti-inflamatóro", 6.99);
-        medicamentos[3] = new Medicamento("Omeprazol", "Inibidor de ácido gástrico", 7.49);
-        medicamentos[4] = new Medicamento("Dipirona", "Analgésico", 4.99);
-        medicamentos[5] = new Medicamento("Dorflex", "Relaxante muscular", 8.99);
-        medicamentos[6] = new Medicamento("Amoxicilina", "Antibiótico", 9.99);
-        medicamentos[7] = new Medicamento("Histamin", "Anti alergico", 3.99);
-        medicamentos[8] = new Medicamento("Expec", "Xarope para tosse", 15.99);
+        Medicamento[] medicamentos = new Medicamento[10];
+        medicamentos[0] = new Medicamento("Aspirina", "Analgésico e anti-inflamatório", 5.99 , 10);
+        medicamentos[1] = new Medicamento("Paracetamol", "Analgésico", 4.49, 10);
+        medicamentos[2] = new Medicamento("Ibuprofeno", "Anti-inflamatóro", 6.99, 10);
+        medicamentos[3] = new Medicamento("Omeprazol", "Inibidor de ácido gástrico", 7.49, 10);
+        medicamentos[4] = new Medicamento("Dipirona", "Analgésico", 4.99, 10);
+        medicamentos[5] = new Medicamento("Dorflex", "Relaxante muscular", 8.99, 10);
+        medicamentos[6] = new Medicamento("Amoxicilina", "Antibiótico", 9.99, 10);
+        medicamentos[7] = new Medicamento("Histamin", "Anti alergico", 3.99, 10);
+        medicamentos[8] = new Medicamento("Expec", "Xarope para tosse", 15.99, 10);
 
 
         System.out.println("Farmácia Senackers");
@@ -29,16 +29,23 @@ public class Main {
             String usuario = scanner.nextLine();
 
             System.out.print("Digite a sua senha: ");
-            int senha = scanner.nextInt();
-            scanner.nextLine();
+            String senhaStr = scanner.nextLine();
 
-            if (usuario.equals(correctUser) && senha == correctPassword) {
-                System.out.println("Usuário logado com sucesso.");
-                break;
-            } else {
-                System.out.println("Usuário ou senha inválidos. Tentativas restantes: " + (maxAttempts - attempts - 1));
-                attempts++;
+
+            try {
+                int senha = Integer.parseInt(senhaStr);
+
+                if (usuario.equals(correctUser) && senha == correctPassword) {
+                    System.out.println("Usuário logado com sucesso.");
+                    break;
+                } else {
+                    System.out.println("Usuário ou senha inválidos. Tentativas restantes: " + (maxAttempts - attempts - 1));
+                    attempts++;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Senha inválida. A senha deve ser um número inteiro.");
             }
+
         }
 
         if (attempts >= maxAttempts) {
@@ -61,6 +68,7 @@ public class Main {
                                 System.out.println("Nome: " + medicamento.getNome());
                                 System.out.println("Descrição: " + medicamento.getDescricao());
                                 System.out.println("Preço: " + medicamento.getPreco());
+                                System.out.println("Quantidade em estoque " + medicamento.getQtdEstoque());
                                 System.out.println();
                             }
                         }
@@ -125,7 +133,8 @@ public class Main {
                 System.out.print("Digite o preço do medicamento: ");
                 double preco = Double.parseDouble(scanner.nextLine());
 
-                medicamentos[i] = new Medicamento(nome, descricao, preco);
+                int qtdEstoque = 10;
+                medicamentos[i] = new Medicamento(nome, descricao, preco, qtdEstoque);
                 return true;
             }
         }

@@ -3,11 +3,14 @@ public class Medicamento { //Nova classe criada para armazenar informações sob
     private String descricao;
     private double preco;
 
+    private int qtdEstoque;
 
-    public Medicamento(String nome, String descricao, double preco) {
+
+    public Medicamento(String nome, String descricao, double preco, int qtdEstoque) {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
+        this.qtdEstoque = qtdEstoque;
     }
 
 
@@ -21,6 +24,10 @@ public class Medicamento { //Nova classe criada para armazenar informações sob
 
     public double getPreco() {
         return preco;
+    }
+
+    public int getQtdEstoque(){
+        return qtdEstoque;
     }
 }
 
