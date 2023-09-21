@@ -11,8 +11,8 @@ public class Main {
         medicamentos[5] = new Medicamento("Dorflex", "Relaxante muscular", 8.99);
         medicamentos[6] = new Medicamento("Amoxicilina", "Antibiótico", 9.99);
         medicamentos[7] = new Medicamento("Histamin", "Anti alergico", 3.99);
+        medicamentos[8] = new Medicamento("Expec", "Xarope para tosse", 15.99);
 
-        // Preencha o array com mais medicamentos
 
         System.out.println("Farmácia Senackers");
         System.out.println("Bem-vindo ao nosso sistema!\nFaça login para continuar.");
