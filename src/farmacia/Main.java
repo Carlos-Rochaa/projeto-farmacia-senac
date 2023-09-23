@@ -1,5 +1,6 @@
+package farmacia;
 import java.util.Scanner;
-
+import entities.Medicamento;
 public class Main {
     public static void main(String[] args) {
         Medicamento[] medicamentos = new Medicamento[10];
@@ -43,7 +44,9 @@ public class Main {
                     attempts++;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Senha inválida. A senha deve ser um número inteiro.");
+                System.out.println("Senha inválida. A senha deve ser um número inteiro. Tentativas restantes: " + (maxAttempts - attempts - 1));
+                attempts++;
+
             }
 
         }
