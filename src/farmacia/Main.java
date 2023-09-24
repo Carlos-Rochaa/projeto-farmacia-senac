@@ -49,7 +49,7 @@ public class Main {
                     tentativas++;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Senha inválida. A senha deve ser um número inteiro. Tentativas restantes: " + (limiteTentativas - tentativas - 1));
+                System.out.println("Senha inválida. A senha deve ser composta de números inteiros. Tentativas restantes: " + (limiteTentativas - tentativas - 1));
                 tentativas++;
 
             }
