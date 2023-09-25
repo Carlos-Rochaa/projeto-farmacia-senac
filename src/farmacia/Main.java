@@ -62,13 +62,13 @@ public class Main {
             System.exit(1);
         }
 
-        int option = 0;
+        int escolhaUsuario = 0;
         do {
             System.out.println("Menu principal:\n1- Listar medicamentos\n2- Buscar medicamento\n3- Inserir medicamento\n4- Remover medicamento\n5- Alterar estoque\n6- Finalizar programa.");
 
             try {
-                System.out.print("Sua escolha: "); option = Integer.parseInt(scanner.nextLine());
-                switch (option) {
+                System.out.print("Sua escolha: "); escolhaUsuario = Integer.parseInt(scanner.nextLine());
+                switch (escolhaUsuario) {
                     case 1:
                         System.out.println("Listagem de Medicamentos:");
                         for (Medicamento medicamento : medicamentos) {
@@ -131,7 +131,7 @@ public class Main {
             } catch (NumberFormatException e) {
                 System.out.println("Opção deve ser um número válido.");
             }
-        } while (option != 6);
+        } while (escolhaUsuario != 6);
 
         scanner.close();
     }
@@ -170,7 +170,6 @@ public class Main {
         System.out.println("Alterar Estoque");
         System.out.print("Digite o nome do medicamento: ");
         String nomeMedicamento = scanner.nextLine();
-
         Medicamento medicamento = null;
         for (Medicamento value : medicamentos) {
             if (value != null && value.getNome().equalsIgnoreCase(nomeMedicamento)) {
@@ -180,22 +179,23 @@ public class Main {
         }
 
         if (medicamento != null) {
+            System.out.println("Quantidade atual do medicamento em estoque: " + medicamento.getQtdEstoque());
             System.out.println("Você deseja adicionar ou subtrair a quantidade atual? \n 1- Adicionar\n 2- Subtrair");
             int alterarQuantidade = Integer.parseInt(scanner.nextLine());
 
             if (alterarQuantidade == 1) {
                 System.out.print("Digite a quantidade que deseja adicionar ao estoque: ");
                 int quantidadeDesejada = Integer.parseInt(scanner.nextLine());
-                medicamento.alterarEstoque(quantidadeDesejada);
+                medicamento.adicionarEstoque(quantidadeDesejada);
             } else if (alterarQuantidade == 2) {
                 System.out.print("Digite a quantidade que deseja subtrair do estoque: ");
                 int quantidadeDesejada = Integer.parseInt(scanner.nextLine());
-                int novoEstoque = medicamento.getQtdEstoque() - quantidadeDesejada;
 
-                if (novoEstoque < 0) {
-                    System.out.println("Não é possível subtrair mais do que o estoque atual.");
+
+                if (quantidadeDesejada <= medicamento.getQtdEstoque()) {
+                    medicamento.subtrairEstoque(quantidadeDesejada);
                 } else {
-                    medicamento.alterarEstoque(novoEstoque);
+                    System.out.println("Não foi possível realizar a operação. A quantidade desejada é maior do que o estoque disponível.");
                 }
             } else {
                 System.out.println("Opção inválida.");

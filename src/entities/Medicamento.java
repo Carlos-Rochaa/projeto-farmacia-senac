@@ -15,11 +15,19 @@ public class Medicamento { //Nova classe criada para armazenar informações sob
     }
 
 
-    public void alterarEstoque(int quantidade) {
+    public void adicionarEstoque(int quantidade) {
         if (quantidade >= 0) {
-            this.qtdEstoque = quantidade;
+            this.qtdEstoque += quantidade;
         } else {
-            System.out.println("Não é possível subtrair mais do que o estoque atual.");
+            System.out.println("Operação não foi realizada devido a um erro");
+        }
+    }
+
+    public void subtrairEstoque(int quantidade) {
+        if (quantidade > 0 && quantidade <= this.qtdEstoque) {
+            this.qtdEstoque -= quantidade;
+        } else {
+            System.out.println("Não é possível subtrair mais do que o estoque atual");
         }
     }
 
