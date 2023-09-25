@@ -1,8 +1,7 @@
 package farmacia;
-
 import java.util.Scanner;
-
 import entities.Medicamento;
+
 
 public class Main {
 
@@ -29,6 +28,7 @@ public class Main {
         int senhaCorreta = 123;
         int limiteTentativas = 5;
         int tentativas = 0;
+        int vendasDoDia = 0;
 
         while (tentativas < limiteTentativas) {
             System.out.print("Digite o seu login: ");
@@ -64,7 +64,7 @@ public class Main {
 
         int escolhaUsuario = 0;
         do {
-            System.out.println("Menu principal:\n1- Listar medicamentos\n2- Buscar medicamento\n3- Inserir medicamento\n4- Remover medicamento\n5- Alterar estoque\n6- Finalizar programa.");
+            System.out.println("Menu principal:\n1- Listar medicamentos\n2- Buscar medicamento\n3- Inserir medicamento\n4- Remover medicamento\n5- Alterar estoque\n6- Realizar venda\n7- Exibir quantas vendas foram feitas no dia\n8- Finalizar programa");
 
             try {
                 System.out.print("Sua escolha: "); escolhaUsuario = Integer.parseInt(scanner.nextLine());
@@ -121,9 +121,52 @@ public class Main {
                         alterarEstoque(medicamentos, scanner);
                         break;
 
-
                     case 6:
-                        System.out.println("Saindo do programa.");
+                        int continuarComprando;
+                        do {
+                            System.out.print("Digite o nome do medicamento a ser vendido: ");
+                            String nomeVendido = scanner.nextLine();
+                            Medicamento medicamentoVendido = null;
+
+
+                            for (Medicamento medicamento : medicamentos) {
+                                if (medicamento != null && medicamento.getNome().equalsIgnoreCase(nomeVendido)) {
+                                    medicamentoVendido = medicamento;
+                                    break;
+                                }
+                            }
+
+                            if (medicamentoVendido != null) {
+                                System.out.print("Digite a quantidade a ser vendida: ");
+                                int quantidadeVendida = Integer.parseInt(scanner.nextLine());
+
+
+                                if (medicamentoVendido.vender(quantidadeVendida)) {
+                                    double valorTotalVenda = quantidadeVendida * medicamentoVendido.getPreco();
+                                    System.out.println("Venda realizada com sucesso, valor total: " + valorTotalVenda);
+                                } else {
+                                    System.out.println("Não há estoque suficiente para a venda.");
+                                }
+                            } else {
+                                System.out.println("Medicamento não encontrado.");
+                            }
+
+                            System.out.print("Deseja adicionar outro medicamento à venda? (1-Sim, 2-Não): ");
+                            continuarComprando = Integer.parseInt(scanner.nextLine());
+                            if(continuarComprando == 2) {
+                                System.out.println("Venda realizada com sucesso, muito obrigado pela preferência!!");
+                                vendasDoDia ++;
+                            }
+                        } while (continuarComprando == 1);
+                        break;
+
+
+
+                    case 7:
+                        System.out.println("Quantidade de vendas hoje: " + vendasDoDia);
+                        break;
+                    case 8:
+                        System.out.println("Encerrando o programa.");
                         break;
                     default:
                         System.out.println("Opção inválida.");
@@ -131,7 +174,7 @@ public class Main {
             } catch (NumberFormatException e) {
                 System.out.println("Opção deve ser um número válido.");
             }
-        } while (escolhaUsuario != 6);
+        } while (escolhaUsuario != 8);
 
         scanner.close();
     }

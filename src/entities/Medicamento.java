@@ -31,6 +31,14 @@ public class Medicamento { //Nova classe criada para armazenar informações sob
         }
     }
 
+    public boolean vender(int quantidade) {
+        if (quantidade > 0 && quantidade <= qtdEstoque) {
+            this.qtdEstoque -= quantidade;
+            return true;
+        }
+        return false;
+    }
+
 
     public String getNome() {
         return nome;
