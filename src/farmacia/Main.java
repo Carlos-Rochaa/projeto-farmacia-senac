@@ -109,8 +109,8 @@ public class Main {
 
                     case 4:
                         System.out.print("Digite o nome do medicamento a ser removido: ");
-                        String nomeRemover = scanner.nextLine();
-                        if (removerMedicamento(medicamentos, nomeRemover)) {
+                        String removerMedicamento = scanner.nextLine();
+                        if (removerMedicamento(medicamentos, removerMedicamento)) {
                             System.out.println("Medicamento removido com sucesso.");
                         } else {
                             System.out.println("Medicamento não encontrado ou não foi possível remover.");
@@ -185,15 +185,17 @@ public class Main {
 
             if (alterarQuantidade == 1) {
                 System.out.print("Digite a quantidade que deseja adicionar ao estoque: ");
-                int quantidadeDesejada = Integer.parseInt(scanner.nextLine());
-                medicamento.adicionarEstoque(quantidadeDesejada);
+                int adicionarQuantidade = Integer.parseInt(scanner.nextLine());
+                medicamento.adicionarEstoque(adicionarQuantidade);
+
+
             } else if (alterarQuantidade == 2) {
                 System.out.print("Digite a quantidade que deseja subtrair do estoque: ");
-                int quantidadeDesejada = Integer.parseInt(scanner.nextLine());
+                int subtrairQuantidade = Integer.parseInt(scanner.nextLine());
 
 
-                if (quantidadeDesejada <= medicamento.getQtdEstoque()) {
-                    medicamento.subtrairEstoque(quantidadeDesejada);
+                if (subtrairQuantidade <= medicamento.getQtdEstoque()) {
+                    medicamento.subtrairEstoque(subtrairQuantidade);
                 } else {
                     System.out.println("Não foi possível realizar a operação. A quantidade desejada é maior do que o estoque disponível.");
                 }
