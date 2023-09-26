@@ -31,7 +31,7 @@ public class Medicamento { //Nova classe criada para armazenar informações sob
         }
     }
 
-    public boolean vender(int quantidade) {
+    public boolean venderMedicamento(int quantidade) {
         if (quantidade > 0 && quantidade <= qtdEstoque) {
             this.qtdEstoque -= quantidade;
             return true;

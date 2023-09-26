@@ -32,6 +32,8 @@ public class Main {
         int tentativas = 0;
         int vendasDoDia = 0;
         double valorTotalDia = 0;
+        double valorProduto = 0;
+        double valorCompra = 0;
 
         while (tentativas < limiteTentativas) {
             System.out.print("Digite o seu login: ");
@@ -145,11 +147,11 @@ public class Main {
                                 System.out.print("Digite a quantidade a ser vendida: ");
                                 int quantidadeVendida = Integer.parseInt(scanner.nextLine());
 
+                                if (medicamentoVendido.venderMedicamento(quantidadeVendida)) {
+                                    valorProduto += quantidadeVendida * medicamentoVendido.getPreco();
+                                    valorTotalDia += valorProduto;
 
-                                if (medicamentoVendido.vender(quantidadeVendida)) {
-                                    double valorTotalVenda = quantidadeVendida * medicamentoVendido.getPreco();
-                                    valorTotalDia += valorTotalVenda;
-                                    System.out.println("Venda realizada com sucesso, valor total:  " + valorTotalVenda);
+                                    System.out.println("Venda realizada com sucesso, valor total:  " + valorProduto);
                                 } else {
                                     System.out.println("Não há estoque suficiente para a venda.");
                                 }
@@ -161,7 +163,10 @@ public class Main {
                             continuarComprando = Integer.parseInt(scanner.nextLine());
 
                             if (continuarComprando == 2) {
-                                System.out.println("Venda realizada com sucesso, muito obrigado pela preferência!!");
+
+                                valorCompra += valorProduto;
+                                System.out.println("Seu valor total foi: " + valorCompra +
+                                        " Venda realizada com sucesso, muito obrigado pela preferência!!");
                                 vendasDoDia++;
 
                             }
@@ -172,6 +177,7 @@ public class Main {
                     case 7:
                         System.out.println("Quantidade de vendas hoje: " + vendasDoDia);
                         System.out.println("Valor total das vendas hoje:  " + valorTotalDia);
+
 
                         break;
                     case 8:
