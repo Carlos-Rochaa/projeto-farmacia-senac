@@ -1,5 +1,7 @@
 package farmacia;
+
 import java.util.Scanner;
+
 import entities.Medicamento;
 
 
@@ -29,6 +31,7 @@ public class Main {
         int limiteTentativas = 5;
         int tentativas = 0;
         int vendasDoDia = 0;
+        double valorTotalDia = 0;
 
         while (tentativas < limiteTentativas) {
             System.out.print("Digite o seu login: ");
@@ -67,7 +70,8 @@ public class Main {
             System.out.println("Menu principal:\n1- Listar medicamentos\n2- Buscar medicamento\n3- Inserir medicamento\n4- Remover medicamento\n5- Alterar estoque\n6- Realizar venda\n7- Exibir quantas vendas foram feitas no dia\n8- Finalizar programa");
 
             try {
-                System.out.print("Sua escolha: "); escolhaUsuario = Integer.parseInt(scanner.nextLine());
+                System.out.print("Sua escolha: ");
+                escolhaUsuario = Integer.parseInt(scanner.nextLine());
                 switch (escolhaUsuario) {
                     case 1:
                         System.out.println("Listagem de Medicamentos:");
@@ -137,13 +141,15 @@ public class Main {
                             }
 
                             if (medicamentoVendido != null) {
+                                System.out.println("quantidade do medicamento " + nomeVendido + " em estoque: " + medicamentoVendido.getQtdEstoque());
                                 System.out.print("Digite a quantidade a ser vendida: ");
                                 int quantidadeVendida = Integer.parseInt(scanner.nextLine());
 
 
                                 if (medicamentoVendido.vender(quantidadeVendida)) {
                                     double valorTotalVenda = quantidadeVendida * medicamentoVendido.getPreco();
-                                    System.out.println("Venda realizada com sucesso, valor total: " + valorTotalVenda);
+                                    valorTotalDia += valorTotalVenda;
+                                    System.out.println("Venda realizada com sucesso, valor total:  " + valorTotalVenda);
                                 } else {
                                     System.out.println("Não há estoque suficiente para a venda.");
                                 }
@@ -151,19 +157,22 @@ public class Main {
                                 System.out.println("Medicamento não encontrado.");
                             }
 
-                            System.out.print("Deseja adicionar outro medicamento à venda? (1-Sim, 2-Não): ");
+                            System.out.print("Deseja adicionar outro medicamento a compra atual?? (1-Sim, 2-Não): ");
                             continuarComprando = Integer.parseInt(scanner.nextLine());
-                            if(continuarComprando == 2) {
+
+                            if (continuarComprando == 2) {
                                 System.out.println("Venda realizada com sucesso, muito obrigado pela preferência!!");
-                                vendasDoDia ++;
+                                vendasDoDia++;
+
                             }
                         } while (continuarComprando == 1);
                         break;
 
 
-
                     case 7:
                         System.out.println("Quantidade de vendas hoje: " + vendasDoDia);
+                        System.out.println("Valor total das vendas hoje:  " + valorTotalDia);
+
                         break;
                     case 8:
                         System.out.println("Encerrando o programa.");
