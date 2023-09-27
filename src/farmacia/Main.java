@@ -108,8 +108,6 @@ public class Main {
                     case 3:
                         if (inserirMedicamento(medicamentos, scanner)) {
                             System.out.println("Medicamento inserido com sucesso.");
-                        } else {
-                            System.out.println("Não foi possível inserir o medicamento. O limite do array foi atingido.");
                         }
                         break;
 
@@ -195,10 +193,16 @@ public class Main {
     }
 
     private static boolean inserirMedicamento(Medicamento[] medicamentos, Scanner scanner) {
+        System.out.println("Digite o nome do medicamento: ");
+        String nome = scanner.nextLine();
+        for(Medicamento medicamento : medicamentos) {
+            if (medicamento != null && medicamento.getNome().equalsIgnoreCase(nome)) {
+                System.out.println("Já existe um medicamento com o nome: " + nome);
+                return false;
+            }
+        }
         for (int i = 0; i < medicamentos.length; i++) {
             if (medicamentos[i] == null) {
-                System.out.print("Digite o nome do medicamento: ");
-                String nome = scanner.nextLine();
                 System.out.print("Digite a descrição do medicamento: ");
                 String descricao = scanner.nextLine();
                 System.out.print("Digite o preço do medicamento: ");
@@ -266,6 +270,7 @@ public class Main {
             System.out.println("Medicamento não encontrado.");
         }
     }
+
 
 
 }
