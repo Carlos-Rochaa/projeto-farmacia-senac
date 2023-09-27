@@ -114,8 +114,15 @@ public class Main {
                     case 4:
                         System.out.print("Digite o nome do medicamento a ser removido: ");
                         String removerMedicamento = scanner.nextLine();
-                        if (removerMedicamento(medicamentos, removerMedicamento)) {
-                            System.out.println("Medicamento removido com sucesso.");
+                        System.out.println("Tem certeza de que deseja remover este medicamento?\n 1-Sim\n 2-Não");
+                        System.out.print("Sua escolha: ");
+                        int escolhaRemocao = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (escolhaRemocao == 1) {
+                            if (removerMedicamento(medicamentos, removerMedicamento)) {
+                                System.out.println("Medicamento removido com sucesso.");
+                            }
                         } else {
                             System.out.println("Medicamento não encontrado ou não foi possível remover.");
                         }
@@ -195,7 +202,7 @@ public class Main {
     private static boolean inserirMedicamento(Medicamento[] medicamentos, Scanner scanner) {
         System.out.println("Digite o nome do medicamento: ");
         String nome = scanner.nextLine();
-        for(Medicamento medicamento : medicamentos) {
+        for (Medicamento medicamento : medicamentos) {
             if (medicamento != null && medicamento.getNome().equalsIgnoreCase(nome)) {
                 System.out.println("Já existe um medicamento com o nome: " + nome);
                 return false;
@@ -270,7 +277,6 @@ public class Main {
             System.out.println("Medicamento não encontrado.");
         }
     }
-
 
 
 }
