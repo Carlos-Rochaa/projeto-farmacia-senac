@@ -1,7 +1,7 @@
 package farmacia;
 
 import java.util.Scanner;
-
+import java.text.DecimalFormat;
 import entities.Medicamento;
 
 
@@ -20,6 +20,7 @@ public class Main {
         medicamentos[7] = new Medicamento("Histamin", "Anti alergico", 3.99, 30);
         medicamentos[8] = new Medicamento("Expec", "Xarope para tosse", 15.99, 7);
 
+        DecimalFormat df = new DecimalFormat("#.00");
 
         System.out.println("Farmácia Senackers");
         System.out.println("Bem-vindo ao nosso sistema!\nFaça login para continuar.");
@@ -32,8 +33,6 @@ public class Main {
         int tentativas = 0;
         int vendasDoDia = 0;
         double valorTotalDia = 0;
-        double valorProduto = 0;
-        double valorCompra = 0;
 
         while (tentativas < limiteTentativas) {
             System.out.print("Digite o seu login: ");
@@ -134,7 +133,9 @@ public class Main {
 
                     case 6:
                         int continuarComprando;
+                        double valorCompra = 0;
                         do {
+                            double valorProdutos = 0;
                             System.out.print("Digite o nome do medicamento a ser vendido: ");
                             String nomeVendido = scanner.nextLine();
                             Medicamento medicamentoVendido = null;
@@ -152,11 +153,12 @@ public class Main {
                                 System.out.print("Digite a quantidade a ser vendida: ");
                                 int quantidadeVendida = Integer.parseInt(scanner.nextLine());
 
-                                if (medicamentoVendido.venderMedicamento(quantidadeVendida)) {
-                                    valorProduto += quantidadeVendida * medicamentoVendido.getPreco();
-                                    valorTotalDia += valorProduto;
 
-                                    System.out.println("Venda realizada com sucesso, valor total:  " + valorProduto);
+                                if (medicamentoVendido.venderMedicamento(quantidadeVendida)) {
+                                    valorProdutos += quantidadeVendida * medicamentoVendido.getPreco();
+
+
+                                    System.out.println("Venda realizada com sucesso, valor total:  " + df.format(valorProdutos));
                                 } else {
                                     System.out.println("Não há estoque suficiente para a venda.");
                                 }
@@ -169,17 +171,19 @@ public class Main {
 
                             if (continuarComprando == 2) {
 
-                                valorCompra += valorProduto;
+                                valorCompra += valorProdutos;
                                 System.out.println("Seu valor total foi: " + valorCompra +
                                         " Venda realizada com sucesso, muito obrigado pela preferência!!");
                                 vendasDoDia++;
 
                             }
+                            valorTotalDia += valorProdutos;
                         } while (continuarComprando == 1);
                         break;
 
 
                     case 7:
+
                         System.out.println("Quantidade de vendas hoje: " + vendasDoDia);
                         System.out.println("Valor total das vendas hoje:  " + valorTotalDia);
 
