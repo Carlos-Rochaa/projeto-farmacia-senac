@@ -1,8 +1,11 @@
 package farmacia;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.text.DecimalFormat;
+
 import entities.Medicamento;
+import entities.Vendas;
 
 
 public class Main {
@@ -19,6 +22,7 @@ public class Main {
         medicamentos[6] = new Medicamento("Amoxicilina", "Antibiótico", 9.99, 27);
         medicamentos[7] = new Medicamento("Histamin", "Anti alergico", 3.99, 30);
         medicamentos[8] = new Medicamento("Expec", "Xarope para tosse", 15.99, 7);
+        ArrayList<Vendas> vendasDia = new ArrayList<>();
 
         DecimalFormat df = new DecimalFormat("#.00");
 
@@ -132,12 +136,15 @@ public class Main {
                         break;
 
                     case 6:
-                        int continuarComprando;
+                        int continuarComprando = 0;
                         double valorCompra = 0;
+
                         do {
+                            String nomeVendido;
+                            int quantidadeVendida;
                             double valorProdutos = 0;
                             System.out.print("Digite o nome do medicamento a ser vendido: ");
-                            String nomeVendido = scanner.nextLine();
+                            nomeVendido = scanner.nextLine();
                             Medicamento medicamentoVendido = null;
 
 
@@ -150,15 +157,20 @@ public class Main {
 
                             if (medicamentoVendido != null) {
                                 System.out.println("quantidade do medicamento " + nomeVendido + " em estoque: " + medicamentoVendido.getQtdEstoque());
+                                System.out.println("Preço do medicamento " + nomeVendido + ": " + medicamentoVendido.getPreco());
                                 System.out.print("Digite a quantidade a ser vendida: ");
-                                int quantidadeVendida = Integer.parseInt(scanner.nextLine());
+                                quantidadeVendida = Integer.parseInt(scanner.nextLine());
 
 
                                 if (medicamentoVendido.venderMedicamento(quantidadeVendida)) {
                                     valorProdutos += quantidadeVendida * medicamentoVendido.getPreco();
+                                    valorCompra += valorProdutos;
 
 
                                     System.out.println("Venda realizada com sucesso, valor total:  " + df.format(valorProdutos));
+
+                                    Vendas vendas = new Vendas(nomeVendido, quantidadeVendida, valorProdutos);
+                                    vendasDia.add(vendas);
                                 } else {
                                     System.out.println("Não há estoque suficiente para a venda.");
                                 }
@@ -166,19 +178,29 @@ public class Main {
                                 System.out.println("Medicamento não encontrado.");
                             }
 
-                            System.out.print("Deseja adicionar outro medicamento a compra atual?? (1-Sim, 2-Não): ");
-                            continuarComprando = Integer.parseInt(scanner.nextLine());
+                            do {
+                                System.out.print("Deseja adicionar outro medicamento a compra atual?? (1-Sim, 2-Não): ");
+                                String input = scanner.nextLine();
+                                try {
+                                    continuarComprando = Integer.parseInt(input);
+                                    if (continuarComprando != 1 && continuarComprando != 2) {
+                                        System.out.println("Digite 1 para sim ou 2 para não.");
+                                    }
+                                } catch (NumberFormatException e) {
+                                    System.out.println("Por favor, digite um número válido, 1 para sim ou 2 para não.");
+                                }
+                            } while (continuarComprando != 1 && continuarComprando != 2);
 
                             if (continuarComprando == 2) {
-
-                                valorCompra += valorProdutos;
-                                System.out.println("Seu valor total foi: " + valorCompra +
+                                System.out.println("Seu valor total foi: " + df.format(valorCompra) +
                                         " Venda realizada com sucesso, muito obrigado pela preferência!!");
                                 vendasDoDia++;
-
                             }
-                            valorTotalDia += valorProdutos;
+
                         } while (continuarComprando == 1);
+
+
+                        valorTotalDia += valorCompra;
                         break;
 
 
@@ -186,6 +208,12 @@ public class Main {
 
                         System.out.println("Quantidade de vendas hoje: " + vendasDoDia);
                         System.out.println("Valor total das vendas hoje:  " + valorTotalDia);
+                        System.out.println("Vendas de hoje: ");
+                        for (Vendas venda : vendasDia) {
+                            System.out.println("Nome: " + venda.getNomeMedicamento());
+                            System.out.println("Quantidade vendida: " + venda.getQuantidade());
+                            System.out.println("Valor total: " + venda.getValorTotal());
+                        }
 
 
                         break;
@@ -281,6 +309,5 @@ public class Main {
             System.out.println("Medicamento não encontrado.");
         }
     }
-
-
 }
+
