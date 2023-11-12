@@ -25,9 +25,12 @@ public class Main {
         ArrayList<Vendas> vendasDia = new ArrayList<>();
 
         DecimalFormat df = new DecimalFormat("#.00");
-
-        System.out.println("Farmácia Senackers");
-        System.out.println("Bem-vindo ao nosso sistema!\nFaça login para continuar.");
+        System.out.println("|-------------------------|");
+        System.out.println("|    FARMÁCIA SENACKERS   |");
+        System.out.println("|-------------------------|");
+        System.out.println();
+        System.out.println("BEM-VINDO AO NOSSO SISTEMA!\nFAÇA LOGIN PARA CONTINUAR");
+        System.out.println();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -37,17 +40,17 @@ public class Main {
         int tentativas = 0;
         int vendasDoDia = 0;
         double valorTotalDia = 0;
-
+        System.out.println();
         while (tentativas < limiteTentativas) {
             System.out.print("Digite o seu login: ");
             String usuario = scanner.nextLine();
 
             System.out.print("Digite a sua senha: ");
-            String senhaStr = scanner.nextLine();
+            String senhaSistema = scanner.nextLine();
 
 
             try {
-                int senha = Integer.parseInt(senhaStr);
+                int senha = Integer.parseInt(senhaSistema);
 
                 if (usuario.equals(usuarioCorreto) && senha == senhaCorreta) {
                     System.out.println("Usuário logado com sucesso.");
@@ -218,7 +221,6 @@ public class Main {
 
                         break;
                     case 8:
-                        System.out.println("Encerrando o programa.");
                         break;
                     default:
                         System.out.println("Opção inválida.");
@@ -227,9 +229,17 @@ public class Main {
                 System.out.println("Opção deve ser um número válido.");
             }
         } while (escolhaUsuario != 8);
-
-        scanner.close();
+        try {
+            System.out.println("Encerrando o programa...");
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            System.out.println("Houve um problema ao aguardar antes de encerrar");
+            e.printStackTrace();
+        } finally {
+            scanner.close();
+        }
     }
+
 
     private static boolean inserirMedicamento(Medicamento[] medicamentos, Scanner scanner) {
         System.out.println("Digite o nome do medicamento: ");

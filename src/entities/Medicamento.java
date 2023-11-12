@@ -16,7 +16,7 @@ public class Medicamento { //Nova classe criada para armazenar informações sob
 
 
     public void adicionarEstoque(int quantidade) {
-        if (quantidade >= 0) {
+        if (quantidade >= 0) { 
             this.qtdEstoque += quantidade;
         } else {
             System.out.println("Operação não foi realizada devido a um erro");
