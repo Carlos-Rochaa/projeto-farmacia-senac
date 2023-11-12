@@ -316,7 +316,7 @@ public class Main {
 
             System.out.println("Estoque de " + medicamento.getNome() + " atualizado para " + medicamento.getQtdEstoque());
         } else {
-            System.out.println("Medicamento não encontrado.");
+            System.out.println("Medicamento não encontrado, tente novamente.");
         }
     }
 }
