@@ -1,11 +1,12 @@
 package entities;
+
 import java.text.DecimalFormat;
 
 public class Vendas {
     DecimalFormat df = new DecimalFormat("#.00");
-    private String nomeMedicamento; // Alterado para uma única String
-    private int quantidade;
-    private double valorTotal;
+    private final String nomeMedicamento; // Alterado para uma única String
+    private final int quantidade;
+    private final double valorTotal;
 
     public Vendas(String nomeMedicamento, int quantidade, double valorTotal) {
         this.nomeMedicamento = nomeMedicamento;

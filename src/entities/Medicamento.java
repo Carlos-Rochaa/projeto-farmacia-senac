@@ -1,8 +1,8 @@
 package entities;
 public class Medicamento { //Nova classe criada para armazenar informações sobre os medicamentos
-    private  String nome;
-    private  String descricao;
-    private  double preco;
+    private final String nome;
+    private final String descricao;
+    private final double preco;
 
     private  int qtdEstoque;
 
