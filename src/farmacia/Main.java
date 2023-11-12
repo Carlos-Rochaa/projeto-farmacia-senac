@@ -75,7 +75,7 @@ public class Main {
 
         int escolhaUsuario = 0;
         do {
-            System.out.println("Menu principal:\n1- Listar medicamentos\n2- Buscar medicamento\n3- Inserir medicamento\n4- Remover medicamento\n5- Alterar estoque\n6- Realizar venda\n7- Exibir quantas vendas foram feitas no dia\n8- Finalizar programa");
+            System.out.println("Menu principal:\n\n1- Listar medicamentos\n\n2- Buscar medicamento\n\n3- Inserir medicamento\n\n4- Remover medicamento\n\n5- Alterar estoque\n\n6- Realizar venda\n\n7- Exibir quantas vendas foram feitas no dia\n\n8- Finalizar programa\n");
 
             try {
                 System.out.print("Sua escolha: ");
@@ -85,9 +85,13 @@ public class Main {
                         System.out.println("Listagem de Medicamentos:");
                         for (Medicamento medicamento : medicamentos) {
                             if (medicamento != null) {
+                                System.out.println("|----------------------------------------------------------|");
                                 System.out.println("Nome: " + medicamento.getNome());
+                                System.out.println();
                                 System.out.println("Descrição: " + medicamento.getDescricao());
-                                System.out.println("Preço: " + medicamento.getPreco());
+                                System.out.println();
+                                System.out.println("Preço: " + medicamento.getPreco() );
+                                System.out.println();
                                 System.out.println("Quantidade em estoque " + medicamento.getQtdEstoque());
                                 System.out.println();
                             }
@@ -208,16 +212,20 @@ public class Main {
 
 
                     case 7:
-
-                        System.out.println("Quantidade de vendas hoje: " + vendasDoDia);
-                        System.out.println("Valor total das vendas hoje:  " + valorTotalDia);
-                        System.out.println("Vendas de hoje: ");
-                        for (Vendas venda : vendasDia) {
-                            System.out.println("Nome: " + venda.getNomeMedicamento());
-                            System.out.println("Quantidade vendida: " + venda.getQuantidade());
-                            System.out.println("Valor total: " + venda.getValorTotal());
+                        if(vendasDoDia >= 1) {
+                            System.out.println("|--------------------------------------------------|");
+                            System.out.println("Quantidade de vendas hoje: " + df.format(vendasDoDia));
+                            System.out.println("Valor total das vendas hoje:  " + df.format(valorTotalDia));
+                            System.out.println("Vendas de hoje: ");
+                            System.out.println("|--------------------------------------------------|");
+                            for (Vendas venda : vendasDia) {
+                                System.out.println("Nome: " + venda.getNomeMedicamento());
+                                System.out.println("Quantidade vendida: " + venda.getQuantidade());
+                                System.out.println("Valor total: " + venda.getValorTotal());
+                            }
+                        } else {
+                            System.out.println("Ainda não foram realizadas vendas no dia.");
                         }
-
 
                         break;
                     case 8:
@@ -231,7 +239,7 @@ public class Main {
         } while (escolhaUsuario != 8);
         try {
             System.out.println("Encerrando o programa...");
-            Thread.sleep(5000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             System.out.println("Houve um problema ao aguardar antes de encerrar");
             e.printStackTrace();

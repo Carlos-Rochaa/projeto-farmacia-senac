@@ -1,7 +1,8 @@
 package entities;
-
+import java.text.DecimalFormat;
 
 public class Vendas {
+    DecimalFormat df = new DecimalFormat("#.00");
     private String nomeMedicamento; // Alterado para uma única String
     private int quantidade;
     private double valorTotal;
@@ -20,8 +21,8 @@ public class Vendas {
         return quantidade;
     }
 
-    public double getValorTotal() {
-        return valorTotal;
+    public String getValorTotal() {
+        return df.format(valorTotal);
     }
 }
 
