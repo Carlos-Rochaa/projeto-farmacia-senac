@@ -12,7 +12,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Medicamento[] medicamentos = new Medicamento[10];
+        Medicamento[] medicamentos = new Medicamento[20];
         medicamentos[0] = new Medicamento("Aspirina", "Analgésico e anti-inflamatório", 5.99, 30);
         medicamentos[1] = new Medicamento("Paracetamol", "Analgésico", 4.49, 25);
         medicamentos[2] = new Medicamento("Ibuprofeno", "Anti-inflamatóro", 6.99, 20);
@@ -250,7 +250,7 @@ public class Main {
 
 
     private static boolean inserirMedicamento(Medicamento[] medicamentos, Scanner scanner) {
-        System.out.println("Digite o nome do medicamento: ");
+        System.out.print("Digite o nome do medicamento: ");
         String nome = scanner.nextLine();
         for (Medicamento medicamento : medicamentos) {
             if (medicamento != null && medicamento.getNome().equalsIgnoreCase(nome)) {
