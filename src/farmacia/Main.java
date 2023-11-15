@@ -225,8 +225,10 @@ public class Main {
                             }
 
                             do {
-                                System.out.print("Deseja adicionar outro medicamento à compra atual? (1-Sim, 2-Não): ");
+                                System.out.println("Deseja adicionar outro medicamento à compra atual? (1-Sim, 2-Não): ");
+                                System.out.print("Sua escolha: ");
                                 String input = scanner.nextLine();
+                                System.out.println();
                                 try {
                                     continuarComprando = Integer.parseInt(input);
                                     if (continuarComprando != 1 && continuarComprando != 2) {
