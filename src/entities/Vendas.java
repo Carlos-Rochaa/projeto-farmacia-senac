@@ -22,8 +22,8 @@ public class Vendas {
         return quantidade;
     }
 
-    public String getValorTotal() {
-        return df.format(valorTotal);
+    public double getValorTotal() {
+        return valorTotal;
     }
 }
 
