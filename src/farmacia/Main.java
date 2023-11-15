@@ -60,7 +60,7 @@ public class Main {
         int limiteTentativas = 5;
         int tentativas = 0;
         int vendasDoDia = 0;
-        double valorTotalDia = 0;
+
         System.out.println();
         while (tentativas < limiteTentativas) {
             System.out.print("Digite o seu login: ");
@@ -75,6 +75,7 @@ public class Main {
 
                 if (usuario.equals(usuarioCorreto) && senha == senhaCorreta) {
                     System.out.println("Usuário logado com sucesso.");
+                    System.out.println();
                     break;
                 } else {
                     System.out.println("Usuário ou senha inválidos. Tentativas restantes: " + (limiteTentativas - tentativas - 1));
@@ -95,7 +96,7 @@ public class Main {
         }
 
         int escolhaUsuario = 0;
-
+        double valorTotalDia = 0;
 
         do {
             LocalDateTime horaLocal = java.time.LocalDateTime.now();
@@ -132,6 +133,7 @@ public class Main {
                     case 2:
                         System.out.print("Digite o nome do medicamento a ser buscado: ");
                         String nomeBuscado = scanner.nextLine();
+                        System.out.println();
                         boolean encontrado = false;
                         for (Medicamento medicamento : medicamentos) {
                             if (medicamento != null && medicamento.getNome().equalsIgnoreCase(nomeBuscado)) {
@@ -150,6 +152,7 @@ public class Main {
                     case 3:
                         if (inserirMedicamento(medicamentos, scanner)) {
                             System.out.println("Medicamento inserido com sucesso.");
+                            System.out.println();
                         }
                         break;
 
@@ -181,7 +184,7 @@ public class Main {
 
                         do {
                             String nomeVendido;
-                            int quantidadeVendida = 0;
+                            int quantidadeASerVendida = 0;
                             double valorProdutos = 0;
                             Medicamento medicamentoVendido = null;
 
@@ -199,19 +202,19 @@ public class Main {
                                 System.out.println("Quantidade do medicamento " + nomeVendido + " em estoque: " + medicamentoVendido.getQuantidadeEstoque());
                                 System.out.println("Preço do medicamento " + nomeVendido + ": " + medicamentoVendido.getPreco());
                                 System.out.print("Digite a quantidade a ser vendida: ");
-                                quantidadeVendida = Integer.parseInt(scanner.nextLine());
+                                quantidadeASerVendida = Integer.parseInt(scanner.nextLine());
 
-                                if (quantidadeVendida <= medicamentoVendido.getQuantidadeEstoque()) {
-                                    valorProdutos += quantidadeVendida * medicamentoVendido.getPreco();
+                                if (quantidadeASerVendida <= medicamentoVendido.getQuantidadeEstoque()) {
+                                    valorProdutos += quantidadeASerVendida * medicamentoVendido.getPreco();
                                     valorCompra += valorProdutos;
 
                                     System.out.println("Venda realizada com sucesso, valor total: " + df.format(valorProdutos));
 
 
-                                    conexao(medicamentoVendido, quantidadeVendida, connection);
+                                    conexao(medicamentoVendido, quantidadeASerVendida, connection);
 
 
-                                    Vendas vendas = new Vendas(nomeVendido, quantidadeVendida, valorProdutos);
+                                    Vendas vendas = new Vendas(nomeVendido, quantidadeASerVendida, valorProdutos);
                                     vendasDia.add(vendas);
                                     inserirVenda(vendas, connection);
                                 } else {
@@ -239,8 +242,7 @@ public class Main {
                                         " Venda realizada com sucesso, muito obrigado pela preferência!!");
                                 System.out.println();
                                 vendasDoDia++;
-                                medicamentoVendido.subtrairEstoque(quantidadeVendida);
-
+                                medicamentoVendido.subtrairEstoque(quantidadeASerVendida);
 
 
                             }
@@ -248,12 +250,10 @@ public class Main {
 
                         } while (continuarComprando == 1);
 
+
                         valorTotalDia += valorCompra;
 
                         break;
-
-
-
 
 
                     case 7:
@@ -266,15 +266,23 @@ public class Main {
                             System.out.println("Quantidade de vendas do dia (" + dataFormatada + "): " + vendasDia.size());
                             System.out.println("Vendas de hoje");
                             System.out.println();
+                            valorTotalDia = 0;
                             for (Vendas venda : vendasDia) {
                                 System.out.println("Nome: " + venda.getNomeMedicamento());
                                 System.out.println("Quantidade vendida: " + venda.getQuantidade());
-                                System.out.printf("Valor total: %.2f\n " , venda.getValorTotal());
+                                System.out.printf("Valor total: %.2f\n ", venda.getValorTotal());
                                 System.out.println("|--------------------------------------------------|");
+
+                                valorTotalDia += venda.getValorTotal();
                             }
+                            System.out.printf("Valor total das vendas do dia: %.2f\n", valorTotalDia);
                         } else {
                             System.out.println("Ainda não foram realizadas vendas no dia.");
                         }
+
+
+                        System.out.println();
+
 
                         break;
                     case 8:
@@ -370,7 +378,10 @@ public class Main {
         if (medicamento != null) {
             System.out.println("Quantidade atual do medicamento em estoque: " + medicamento.getQuantidadeEstoque());
             System.out.println("Você deseja adicionar ou subtrair a quantidade atual? \n 1- Adicionar\n 2- Subtrair");
+            System.out.print("Sua escolha: ");
             int alterarQuantidade = Integer.parseInt(scanner.nextLine());
+
+            System.out.println();
 
             if (alterarQuantidade == 1) {
                 System.out.print("Digite a quantidade que deseja adicionar ao estoque: ");
