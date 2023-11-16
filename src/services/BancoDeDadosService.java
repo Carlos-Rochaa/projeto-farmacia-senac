@@ -1,5 +1,7 @@
 package services;
+
 import entities.Vendas;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +11,16 @@ public class BancoDeDadosService {
     private static final String USER = "root";
     private static final String PASSWORD = "123456";
 
-    public static Connection conectar() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    private BancoDeDadosService() {
+
+    }
+
+    public static Connection conectar() {
+        try {
+            return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao conectar ao banco de dados.", e);
+        }
     }
 
     public static void fecharConexao(Connection connection) {
@@ -18,10 +28,11 @@ public class BancoDeDadosService {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Erro ao fechar conexão", e);
             }
         }
     }
+
 
     public static void inserirVenda(Vendas venda, Connection connection) {
         String sqlInsert = "INSERT INTO vendas (nome_medicamento, quantidade, valor_total) VALUES (?, ?, ?)";
@@ -32,8 +43,7 @@ public class BancoDeDadosService {
             preparedStatement.setDouble(3, venda.getValorTotal());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Erro ao inserir venda no banco de dados: " + e.getMessage());
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao inserir venda ao banco de dados", e);
         }
     }
 
@@ -53,12 +63,13 @@ public class BancoDeDadosService {
                 vendasCarregadas.add(venda);
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao carregar vendas do banco de dados: " + e.getMessage());
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao carregar vendas do banco de dados.", e);
         }
 
         return vendasCarregadas;
     }
 
+
 }
+
 

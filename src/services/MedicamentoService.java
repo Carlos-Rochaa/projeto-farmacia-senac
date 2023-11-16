@@ -1,34 +1,24 @@
 package services;
 
 import entities.Medicamento;
-import java.util.*;
+
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 public class MedicamentoService {
+
     private static final String URL = "jdbc:mysql://localhost:3306/projetoCoding";
     private static final String USUARIO = "root";
     private static final String SENHA = "123456";
-
-    private int quantidade_estoque;
-
-
-    public MedicamentoService() {
-        try {
-            Connection connection = DriverManager.getConnection(URL, USUARIO, SENHA);
-        } catch (SQLException e) {
-            System.err.println("Erro ao obter a conexão com o banco de dados");
-            e.printStackTrace();
-            System.exit(1);
-        }
-    }
 
     public static List<Medicamento> carregarDoBanco() {
         List<Medicamento> medicamentos = new ArrayList<>();
         String sqlSelect = "SELECT * FROM medicamentos";
 
-        try (Connection connection = DriverManager.getConnection(URL, USUARIO, SENHA);
+        try (Connection connection = conectar();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlSelect);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -49,18 +39,7 @@ public class MedicamentoService {
         return medicamentos;
     }
 
-
-
-
-
-    public static List<Medicamento> carregarMedicamentos() {
-        // Lógica para carregar medicamentos do banco de dados
-        return MedicamentoService.carregarDoBanco();
-    }
-
-
-    public static boolean inserirMedicamento(List<Medicamento> medicamentos, Scanner scanner) {
-        // Lógica para inserir um novo medicamento
+    public static boolean inserirMedicamento(List<Medicamento> medicamentos, Scanner scanner) throws SQLException {
         System.out.print("Digite o nome do medicamento: ");
         String nome = scanner.nextLine();
 
@@ -81,40 +60,29 @@ public class MedicamentoService {
         Medicamento novoMedicamento = new Medicamento(nome, descricao, preco, quantidadeInicial);
         medicamentos.add(novoMedicamento);
 
-        novoMedicamento.salvarNoBanco();
+        novoMedicamento.salvarNoBanco(conectar());
 
         return true;
     }
 
-    public static boolean removerMedicamento(List<Medicamento> medicamentos, String nome) {
-        Iterator<Medicamento> iterator = medicamentos.iterator(); // Lógica para remover um medicamento
+    public static boolean removerMedicamento(List<Medicamento> medicamentos, String nome) throws SQLException {
+        Iterator<Medicamento> iterator = medicamentos.iterator();
         while (iterator.hasNext()) {
             Medicamento medicamento = iterator.next();
             if (medicamento != null && medicamento.getNome().equalsIgnoreCase(nome)) {
                 iterator.remove();
-
-                medicamento.removerDoBanco();
+                medicamento.removerDoBanco(conectar());
                 return true;
             }
         }
         return false;
-
     }
 
-    public static void alterarEstoque(ArrayList<Medicamento> medicamentos, Scanner scanner, Connection connection) {
-        // Lógica para alterar o estoque de um medicamento
-
+    public static void alterarEstoque(ArrayList<Medicamento> medicamentos, Scanner scanner, Connection connection) throws SQLException {
         System.out.println("Alterar Estoque");
         System.out.print("Digite o nome do medicamento: ");
         String nomeMedicamento = scanner.nextLine();
-        Medicamento medicamento = null;
-
-        for (Medicamento value : medicamentos) {
-            if (value != null && value.getNome().equalsIgnoreCase(nomeMedicamento)) {
-                medicamento = value;
-                break;
-            }
-        }
+        Medicamento medicamento = buscarMedicamentoPorNome(medicamentos, nomeMedicamento);
 
         if (medicamento != null) {
             System.out.println("Quantidade atual do medicamento em estoque: " + medicamento.getQuantidadeEstoque());
@@ -141,13 +109,27 @@ public class MedicamentoService {
                 System.out.println("Opção inválida.");
             }
 
-            medicamento.atualizarEstoqueNoBanco(connection);
-
+            medicamento.atualizarEstoqueNoBanco(conectar());
             System.out.println("Estoque de " + medicamento.getNome() + " atualizado para " + medicamento.getQuantidadeEstoque());
         } else {
             System.out.println("Medicamento não encontrado, tente novamente.");
         }
     }
 
+    private static Medicamento buscarMedicamentoPorNome(List<Medicamento> medicamentos, String nome) {
+        for (Medicamento medicamento : medicamentos) {
+            if (medicamento != null && medicamento.getNome().equalsIgnoreCase(nome)) {
+                return medicamento;
+            }
+        }
+        return null;
+    }
 
+    private static Connection conectar() {
+        try {
+            return DriverManager.getConnection(URL, USUARIO, SENHA);
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao conectar ao banco de dados.", e);
+        }
+    }
 }
