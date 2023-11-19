@@ -95,6 +95,7 @@ public class Main {
 
 
     }
+
     private static void encerrarPrograma(Scanner scanner) {
         scanner.close();
     }
@@ -109,7 +110,7 @@ public class Main {
             return connection;
         } catch (SQLException e) {
             System.err.println("Erro ao obter a conexão com o banco de dados" + e.getMessage());
-            throw new RuntimeException("Falha ao conectar ao banco de dados." , e);
+            throw new RuntimeException("Falha ao conectar ao banco de dados.", e);
         }
     }
 
@@ -202,7 +203,7 @@ public class Main {
             if (MedicamentoService.removerMedicamento(medicamentos, removerMedicamento)) {
                 System.out.println("Medicamento removido com sucesso.");
             }
-        } else if (escolhaRemocao == 2){
+        } else if (escolhaRemocao == 2) {
             System.out.println("Você cancelou a operação");
         } else {
             System.out.println("Opção inválida.");
@@ -212,7 +213,6 @@ public class Main {
     private static void realizarVenda(Scanner scanner, ArrayList<Medicamento> medicamentos, Connection connection) throws SQLException {
         int continuarComprando = 0;
         double valorCompra = 0;
-
 
         do {
             String nomeVendido;
@@ -241,11 +241,11 @@ public class Main {
                     valorCompra += valorProdutos;
 
                     System.out.printf("Venda realizada com sucesso, valor total: %.2f\n", valorProdutos);
-
-
                     Vendas vendas = new Vendas(nomeVendido, quantidadeASerVendida, valorProdutos);
                     Main.vendasDia.add(vendas);
                     inserirVenda(vendas, connection);
+
+
                     if (medicamentoVendido.getQuantidadeEstoque() <= 0) {
                         medicamentos.remove(medicamentoVendido);
                     }
@@ -269,32 +269,21 @@ public class Main {
                 } catch (NumberFormatException e) {
                     System.out.println("Por favor, digite um número válido, 1 para sim ou 2 para não.");
                 }
+
+
+                if (medicamentoVendido != null) {
+                    medicamentoVendido.subtrairEstoque(quantidadeASerVendida);
+                    medicamentoVendido.atualizarEstoqueNoBanco(connection);
+                }
+
             } while (continuarComprando != 1 && continuarComprando != 2);
-
-            if (continuarComprando == 2) {
-                System.out.printf("Seu valor total foi: %.2f\n", valorCompra);
-                System.out.println("Venda realizada com sucesso, muito obrigado pela preferência!!");
-
-                System.out.println();
-
-
-                assert medicamentoVendido != null;
-                medicamentoVendido.subtrairEstoque(quantidadeASerVendida);
-
-
-            }
-
 
         } while (continuarComprando == 1);
 
-        for (Medicamento medicamento : medicamentos) {
-            if (medicamento != null) {
-                medicamento.atualizarEstoqueNoBanco(connection);
-            }
-        }
-
-
+        System.out.printf("Seu valor total foi: %.2f\n", valorCompra);
+        System.out.println("Venda realizada com sucesso, muito obrigado pela preferência!!");
     }
+
 
     private static void exibirVendas(Connection connection) throws SQLException {
         vendasDia.clear();
