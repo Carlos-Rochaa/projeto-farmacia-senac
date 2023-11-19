@@ -3,6 +3,8 @@ package services;
 import entities.Vendas;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,29 +49,38 @@ public class BancoDeDadosService {
         }
     }
 
-    public static List<Vendas> carregarVendasDoBanco(Connection connection) {
+    public static List<Vendas> carregarVendasDoBanco(Connection connection) throws SQLException {
         List<Vendas> vendasCarregadas = new ArrayList<>();
+        final LocalDateTime now = LocalDateTime.now().withNano(0);
+        String sqlSelect = "SELECT * FROM vendas WHERE DATE(data_venda) = ?";
 
-        String sqlSelect = "SELECT * FROM vendas";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlSelect)) {
+            LocalDate dataAtual = LocalDate.now();
+            java.sql.Date sqlDate = java.sql.Date.valueOf(dataAtual);
+            preparedStatement.setDate(1, sqlDate);
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlSelect);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-            while (resultSet.next()) {
-                String nomeMedicamento = resultSet.getString("nome_medicamento");
-                int quantidade = resultSet.getInt("quantidade");
-                double valorTotal = resultSet.getDouble("valor_total");
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    String nomeMedicamento = resultSet.getString("nome_medicamento");
+                    int quantidade = resultSet.getInt("quantidade");
+                    double valorTotal = resultSet.getDouble("valor_total");
 
-                Vendas venda = new Vendas(nomeMedicamento, quantidade, valorTotal);
-                vendasCarregadas.add(venda);
+                    Vendas venda = new Vendas(nomeMedicamento, quantidade, valorTotal);
+                    vendasCarregadas.add(venda);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException("Erro ao carregar vendas do banco de dados.", e);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao carregar vendas do banco de dados.", e);
         }
 
         return vendasCarregadas;
     }
 
-
 }
+
+
+
+
+
 
 

@@ -296,7 +296,7 @@ public class Main {
 
     }
 
-    private static void exibirVendas(Connection connection) {
+    private static void exibirVendas(Connection connection) throws SQLException {
         vendasDia.clear();
         vendasDia.addAll(carregarVendasDoBanco(connection));
 
