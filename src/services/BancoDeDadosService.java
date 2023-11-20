@@ -9,20 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BancoDeDadosService {
-    private static final String URL = "jdbc:mysql://localhost:3306/projetoCoding";
-    private static final String USER = "root";
-    private static final String PASSWORD = "123456";
+    private static final String URL = "jdbc:mysql://db4free.net:3306/projetocoding";
+    private static final String USER = "carloshrocha";
+    private static final String PASSWORD = "Ch@34462341";
 
     private BancoDeDadosService() {
 
     }
 
     public static Connection conectar() {
+        Connection connection = null;
         try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao conectar ao banco de dados.", e);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Conectado ao banco de dados!");
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
         }
+        return connection;
     }
 
     public static void fecharConexao(Connection connection) {

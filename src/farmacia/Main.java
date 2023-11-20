@@ -101,9 +101,9 @@ public class Main {
     }
 
     private static Connection conectarBanco() {
-        String url = "jdbc:mysql://localhost:3306/projetoCoding";
-        String user = "root";
-        String password = "123456";
+        String url = "jdbc:mysql://db4free.net:3306/projetocoding";
+        String user = "carloshrocha";
+        String password = "Ch@34462341";
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
             carregarVendasDoBanco(connection);

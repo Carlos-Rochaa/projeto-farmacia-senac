@@ -10,9 +10,9 @@ import java.util.Scanner;
 
 public class MedicamentoService {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/projetoCoding";
-    private static final String USUARIO = "root";
-    private static final String SENHA = "123456";
+    private static final String URL = "jdbc:mysql://db4free.net:3306/projetocoding";
+    private static final String USUARIO = "carloshrocha";
+    private static final String SENHA = "Ch@34462341";
 
     public static List<Medicamento> carregarDoBanco() {
         List<Medicamento> medicamentos = new ArrayList<>();
