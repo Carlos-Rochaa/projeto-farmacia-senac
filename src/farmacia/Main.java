@@ -147,7 +147,7 @@ public class Main {
             System.out.println("A lista de medicamentos está vazia");
             System.out.println();
         } else {
-            System.out.println("Listagem de Medicamentos:");
+            System.out.println("Listagem de Medicamentos: ");
             for (Medicamento medicamento : medicamentos) {
                 if (medicamento != null) {
                     System.out.println("|----------------------------------------------------------|");
